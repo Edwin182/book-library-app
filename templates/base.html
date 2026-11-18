@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}My Library{% endblock title %}</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
+        crossorigin="anonymous"
+    >
+
+    {% block page_styles %}{% endblock page_styles %}
+</head>
+
+<body class="bg-light d-flex flex-column min-vh-100">
+
+    <header class="bg-dark shadow-sm">
+        <nav class="container py-3 d-flex flex-wrap justify-content-between align-items-center gap-3"
+            aria-label="Main navigation">
+
+            <a href="{% url 'home' %}"
+                class="text-white text-decoration-none fs-4 fw-bold">
+                📚 My Library
+            </a>
+
+            <div class="d-flex gap-2">
+                <a href="{% url 'home' %}"
+                    class="btn btn-outline-light btn-sm px-3">
+                    Home
+                </a>
+
+                <a href="{% url 'inventory_page' %}"
+                    class="btn btn-outline-light btn-sm px-3">
+                    Inventory
+                </a>
+            </div>
+
+        </nav>
+    </header>
+
+    <main class="flex-grow-1 py-5">
+        {% block content %}
+        {% endblock content %}
+    </main>
+
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p class="mb-1 fw-bold">📚 My Library</p>
+            <p class="mb-0 text-white-50 small">
+                &copy; {% now "Y" %} Edwin Gaitan | Library Project
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>

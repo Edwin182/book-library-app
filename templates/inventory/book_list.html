@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Book Inventory | My Library{% endblock title %}
+
+{% block content %}
+<div class="container">
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <div>
+            <p class="text-primary text-uppercase fw-bold small mb-2">
+                Your collection
+            </p>
+
+            <h1 class="fw-bold mb-2">Book Inventory</h1>
+
+            <p class="text-secondary mb-0">
+                A little organization. A world of stories.
+            </p>
+        </div>
+
+        <a href="{% url 'add_book' %}" class="btn btn-primary px-4 py-2">
+          + Add Book
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+
+        <div class="card-header bg-white border-bottom p-4 d-flex flex-wrap
+                    justify-content-between align-items-center gap-2">
+            <h2 class="h5 fw-bold mb-0">All Books</h2>
+
+            <span class="badge rounded-pill bg-primary">
+                {{ books_list|length }} book{{ books_list|length|pluralize }}
+            </span>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <caption class="visually-hidden">
+                    Library books with author, year, price, and available actions.
+                </caption>
+
+                <thead class="table-light">
+                    <tr>
+                      <th scope="col" class="ps-4 py-3">Title</th>
+                      <th scope="col" class="py-3">Author</th>
+                      <th scope="col" class="py-3">Year</th>
+                      <th scope="col" class="py-3 text-end">Price</th>
+                      <th scope="col" class="pe-4 py-3 text-end">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for book in books_list %}
+                    <tr>
+                        <td class="ps-4 py-3 fw-semibold">
+                            {{ book.title }}
+                        </td>
+
+                        <td class="py-3 text-secondary">
+                            {{ book.author }}
+                        </td>
+
+                        <td class="py-3">
+                            {{ book.year }}
+                        </td>
+
+                        <td class="py-3 text-end text-nowrap">
+                            ${{ book.price|floatformat:2 }}
+                        </td>
+
+                        <td class="pe-4 py-3 text-end text-nowrap">
+                            <a href="{% url 'edit_book' book.id %}"
+                              class="btn btn-sm btn-outline-primary me-1"
+                              aria-label="Edit {{ book.title }}">
+                              Edit
+                            </a>
+
+                            <a href="{% url 'delete_book' book.id %}"
+                              class="btn btn-sm btn-outline-danger"
+                              aria-label="Delete {{ book.title }}">
+                              Delete
+                            </a>
+                        </td>
+                    </tr>
+
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-5">
+                            <p class="fs-1 mb-2" aria-hidden="true">📚</p>
+                            <h3 class="h5 fw-bold">Your shelves are waiting</h3>
+                            <p class="text-secondary mb-0">
+                                No books have been added yet.
+                            </p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card-footer bg-white border-top px-4 py-3">
+            <small class="text-secondary">
+                Your next great read starts here.
+            </small>
+        </div>
+
+    </div>
+</div>
+{% endblock content %}
